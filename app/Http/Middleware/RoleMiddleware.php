@@ -15,23 +15,24 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,$roles): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        // dd('RoleMiddleware is applied!');
-
         /**
          * check token
          */
         $token = $request->cookie('token') ?? $request->query('token');
 
-        if($token) {
+        if ($token) {
             $user = User::where('remember_token', $token)->first();
 
-            if($user) {
-                Auth::login($user);
+            if (!session()->has('logged_in')) {
+                return redirect('/login')->with('error', 'Please log in first.');
 
-                if(!Auth::check() || Auth::user()->role !== $roles) {
-                    return redirect('register')->with('error','First Register Your Role by Email');
+                if ($user) {
+                    Auth::login($user);
+                    if (!Auth::check() || Auth::user()->role !== $role) {
+                        return redirect('register')->with('error', 'First Register Your Role by Email');
+                    }
                 }
             }
         }

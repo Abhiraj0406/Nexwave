@@ -7,25 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function showDashboard()
-    {
-        // return response()->json(User::latest()->get());
-        if (Auth::check('admin || employee || user')) {
-            return view('dashboard.dashboard');
-        } else {
-            return redirect('/login');
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new User.
      */
     public function showRegister()
     {
@@ -51,11 +37,7 @@ class AuthController extends Controller
         $user->remember_token = $token;
         $user->save();
 
-        // return response([
-        //     'token' => $token,
-        // ]);
         Auth::login($user);
-        $roles = Auth::check() ? Auth::user()->role : null;
         return match ($user->role) {
             'admin' => redirect('/{$roles}/dashboard'),
             'employee' => redirect('/{$roles}/dashboard'),
@@ -63,9 +45,8 @@ class AuthController extends Controller
             default => back()->withErrors(['role' => 'Invalid role assigned. Contact the administrator.']),
         };
     }
-
     /**
-     * Show the form for login.
+     * Show the Login form.
      */
     public function showLogin()
     {
@@ -86,58 +67,27 @@ class AuthController extends Controller
         // $roles = Auth::check();
         if ($user && Hash::check($fields['password'], $user->password)) {
             return match ($user->role) {
-                'admin' => redirect('/{$roles}/dashboard'),
-                'employee' => redirect('/{$roles}/dashboard'),
-                'user' => redirect('/{$roles}/dashboard'),
+                'admin' => redirect('/dashboard'),
+                'employee' => redirect('/dashboard'),
+                'user' => redirect('/dashboard'),
                 default => back()->withErrors(['role' => 'Invalid role assigned. Contact the administrator.']),
             };
         }
     }
-
     /**
-     * Show the form for login.
+     * Show the Logout form.
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        return redirect('login');
-    }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Revoke the current token
+        if ($request->user() && $request->user()->currentAccessToken()) {
+            $request->user()->currentAccessToken()->delete();
+        }
+        // Invalidate the session
+        $request->session()->invalidate();
+        // Regenerate CSRF token
+        $request->session()->regenerateToken();
+        // Redirect to the login page
+        return redirect('/');
     }
 }

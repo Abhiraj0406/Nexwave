@@ -28,20 +28,20 @@
                     </a>
                 </li>
                 <li class="px-2 py-2 hover:bg-gray-200 transition">
-                    <a href="/{$role}/dashboard" class="flex items-center space-x-3">
+                    <a href="/dashboard" class="flex items-center space-x-3">
                         <i class="fa-solid fa-clipboard text-xl"></i>
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Dashboard</span>
                     </a>
                 </li>
                 <li class="px-2 py-2 hover:bg-gray-200 transition">
-                    <a href="/{$role}/profile" class="flex items-center space-x-3">
+                    <a href="/profile" class="flex items-center space-x-3">
                         <i class="fa-solid fa-user-tie text-xl"></i>
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Profile</span>
                     </a>
                 </li>
                 @if (Auth::user()->role == 'admin')
                     <li class="px-1 py-2 hover:bg-gray-200 transition">
-                        <a href="/admin/employee" class="flex items-center space-x-3">
+                        <a href="/employee" class="flex items-center space-x-3">
                             <i class="fa-solid fa-users-gear text-xl"></i>
                             <span
                                 class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Employee</span>
@@ -50,7 +50,7 @@
                 @endif
                 @if (Auth::user()->role !== 'user')
                     <li class="px-1 py-2 hover:bg-gray-200 transition">
-                        <a href="/{$role}/user" class="flex items-center space-x-3">
+                        <a href="/user" class="flex items-center space-x-3">
                             <i class="fa-solid fa-users text-xl"></i>
                             <span
                                 class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Users</span>

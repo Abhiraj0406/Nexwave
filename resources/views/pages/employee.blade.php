@@ -16,7 +16,7 @@
         <x-navbar/>
         {{-- @auth
         @endauth --}}
-        <p class="m-52">Welcome, {{ auth()->user()->name }}!</p>
+        <p class="m-52">Employee details</p>
     </div>
 </body>
 </html>
