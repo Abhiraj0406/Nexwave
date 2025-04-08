@@ -29,7 +29,8 @@
                 </li>
                 <li class="px-2 py-2 hover:bg-gray-200 transition">
                     <a href="/dashboard" class="flex items-center space-x-3">
-                        <i class="fa-solid fa-clipboard text-xl"></i>
+                        {{-- <i class="fa-solid fa-clipboard text-xl"></i> --}}
+                        <i class="fa fa-tachometer text-xl"></i>
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Dashboard</span>
                     </a>
                 </li>
@@ -57,6 +58,20 @@
                         </a>
                     </li>
                 @endif
+                <li class="px-1 py-2 hover:bg-gray-200 transition">
+                    <a href="/site" class="flex items-center space-x-3">
+                        <i class="fa fa-desktop text-xl"></i>
+                        <span
+                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Site</span>
+                    </a>
+                </li>
+                <li class="px-1 py-2 hover:bg-gray-200 transition">
+                    <a href="/readout" class="flex items-center space-x-3">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <span
+                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Readout</span>
+                    </a>
+                </li>
                 <li class="px-2 py-2 hover:bg-red-100 text-red-600 transition">
                     <a href="/logout" class="flex items-center space-x-3">
                         <i class="fa-solid fa-right-from-bracket text-xl"></i>

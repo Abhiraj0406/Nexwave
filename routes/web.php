@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pages\ReadingController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Pages\PageController;
+use App\Http\Controllers\Pages\ReadoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,5 +30,15 @@ Route::middleware(['auth', 'role:{role}'])->group(function () {
         Route::get('/profile', 'showProfile');
         Route::get('/employee', 'showEmployee');
         Route::get('/user', 'showUser');
+        Route::get('/site', 'showSite');
+        Route::get('/readout', 'showReadout');
     });
+/**
+ * ReadoutController
+ */
+    Route::controller(ReadoutController::class)->group(function () {
+        Route::get('/site/create-site', 'showCreatesite');
+    });
+
+    Route::get('/readings', [ReadingController::class, 'showReadings']);
 });

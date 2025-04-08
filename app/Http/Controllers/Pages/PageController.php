@@ -48,4 +48,21 @@ class PageController extends Controller
         }
     }
 
+    public function showSite()
+    {
+        if (Auth::check() && in_array(Auth::user()->role, ['admin', 'employee', 'user'])) {
+            return view('pages.site');
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function showReadout()
+    {
+        if (Auth::check() && in_array(Auth::user()->role, ['admin', 'employee', 'user'])) {
+            return view('pages.readout');
+        } else {
+            return redirect('/login');
+        }
+    }
 }

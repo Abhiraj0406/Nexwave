@@ -39,9 +39,9 @@ class AuthController extends Controller
 
         Auth::login($user);
         return match ($user->role) {
-            'admin' => redirect('/{$roles}/dashboard'),
-            'employee' => redirect('/{$roles}/dashboard'),
-            'user' => redirect('/{$roles}/dashboard'),
+            'admin' => redirect('/dashboard'),
+            'employee' => redirect('/dashboard'),
+            'user' => redirect('/dashboard'),
             default => back()->withErrors(['role' => 'Invalid role assigned. Contact the administrator.']),
         };
     }
