@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('readings', function (Blueprint $table) {
+        Schema::create('sensors', function (Blueprint $table) {
             $table->id();
-            $table->primary('sitename');
-            $table->decimal('voltage', 4, 4);
-            $table->decimal('current', 4, 4);
-            $table->decimal('gauge_factor', 4, 4);
+            $table->unsignedBigInteger('site_id');
+            $table->string('sensor_name');
             $table->timestamps();
+
+            $table->foreign('site_id')
+              ->references('id')
+              ->on('sites')
+              ->onDelete('cascade');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('readings');
+        Schema::dropIfExists('sensors');
     }
 };
