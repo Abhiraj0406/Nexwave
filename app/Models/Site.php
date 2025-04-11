@@ -13,4 +13,9 @@ class Site extends Model
     public function sensors() {
         return $this->hasMany(Sensor::class);
     }
+
+    // protected $fillable = [
+    //     'site_name',
+    //     'user_id',
+    // ];
 }

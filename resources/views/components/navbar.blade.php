@@ -60,16 +60,16 @@
                 @endif
                 <li class="px-1 py-2 hover:bg-gray-200 transition">
                     <a href="/site" class="flex items-center space-x-3">
-                        <i class="fa fa-desktop text-xl"></i>
+                        <i class="fa fa-sitemap text-xl" aria-hidden="true"></i>
                         <span
                             class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Site</span>
                     </a>
                 </li>
                 <li class="px-1 py-2 hover:bg-gray-200 transition">
-                    <a href="/readout" class="flex items-center space-x-3">
-                        <i class="fa fa-book" aria-hidden="true"></i>
+                    <a href="/sensor_configuration" class="flex items-center space-x-3">
+                        <i class="fa fa-desktop text-xl"></i>
                         <span
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Readout</span>
+                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sensor Configuration</span>
                     </a>
                 </li>
                 <li class="px-2 py-2 hover:bg-red-100 text-red-600 transition">

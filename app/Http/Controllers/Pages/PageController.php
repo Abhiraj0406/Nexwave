@@ -57,10 +57,10 @@ class PageController extends Controller
         }
     }
 
-    public function showReadout()
+    public function showSensorConfig()
     {
         if (Auth::check() && in_array(Auth::user()->role, ['admin', 'employee', 'user'])) {
-            return view('pages.readout');
+            return view('pages.sensorConfiguration');
         } else {
             return redirect('/login');
         }
