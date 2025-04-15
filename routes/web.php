@@ -43,7 +43,8 @@ Route::middleware(['auth', 'role:{role}'])->group(function () {
  * SiteController
  */
     Route::controller(SiteController::class)->group(function () {
+        Route::get('/site', 'siteDetails')->name('site');
         Route::get('/site/create-site', 'showCreatesite')->name('create_site');
-        Route::post('/site/create-site1', 'createSite')->name('createSite');
+        Route::post('/site/create-site', 'createSite')->name('createSite');
     });
 });

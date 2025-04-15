@@ -44,24 +44,64 @@
                                 </div>
                             @endif
 
-                            <form class="space-y-4 md:space-y-6" action="" method="">
+                            <form class="space-y-4 md:space-y-6" action="{{ route('site') }}" method="get">
                                 @csrf
                                 <div>
+                                    <label for="user_id"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User
+                                        Name/Id</label>
+                                    <select name="user_id" onchange="this.form.submit()"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        required>
+                                        @if ($users->isEmpty())
+                                            <option value="" disabled>No users available</option>
+                                        @elseif (Auth::user()->role !== 'user')
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ $selectedUser == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->id }}. {{ $user->name }} ({{ $user->email }})
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            @foreach ([$authUser] as $user)
+                                                <option value="{{ $user->id }}"> {{ $user->id }}.
+                                                    {{ $user->name }}
+                                                    ({{ $user->email }})
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
                                     <label for="site"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Site
                                         Name</label>
-                                    <input type="text" name="site" id="site"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="name of site">
+
+                                    <select name="site"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        required>
+                                        @if ($sites->isEmpty())
+                                            <option value="" disabled>No sites available</option>
+                                        @else
+                                            @foreach ($sites as $site)
+                                                <option value="{{ $site->id }}"
+                                                    {{ old('site') == $site->id ? 'selected' : '' }}>
+                                                    {{ $site->id }}. {{ $site->site_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+
+                                    </select>
                                 </div>
-                                <button type="submit"
-                                    class=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Open
-                                    Site</button>
-                                @if (Auth::user()->role !== 'user')
-                                <a href="/site/create-site"
-                                class="mx-5 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create
-                                Site</a>
-                                @endif
+                                <div>
+                                    <a href="/sensor_configuration"
+                                        class=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Open
+                                        Site</a>
+                                    @if (Auth::user()->role !== 'user')
+                                        <a href="/site/create-site"
+                                            class="mx-5 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create
+                                            Site</a>
+                                    @endif
+                                </div>
                             </form>
                         </div>
                     </div>

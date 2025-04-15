@@ -12,16 +12,16 @@ class SiteController extends Controller
 {
     public function showCreatesite()
     {
-        // return View('sites.createSite');
         $users = User::where('role', 'user')->get();
 
         return view('sites.createSite', compact('users'));
     }
 
-    public function createSite(Request $request) {
+    public function createSite(Request $request)
+    {
         $fields = $request->validate([
             'site_name' => 'required|string|max:255|unique:sites,site_name',
-            'user_id' => 'required|exists:users,id', // selected user to assign site(**exists**)
+            'user_id' => 'required|exists:users,id',
         ]);
 
         /**
@@ -37,5 +37,19 @@ class SiteController extends Controller
         $site->save();
 
         return redirect('site')->with('success', 'Site created for user successfully.');
+    }
+
+    public function siteDetails(Request $request)
+    {
+        $authUser = Auth::user();
+        $users = ($authUser->role === 'user')
+            ? collect([$authUser])
+            : User::where('role', 'user')->get();
+
+        $selectedUser = $request->get('user_id') ?? ($authUser->role === 'user' ? $authUser->id : null);
+
+        $sites = $selectedUser ? Site::where('user_id', $selectedUser)->get() : collect();
+
+        return view('pages.site', compact('users', 'sites', 'selectedUser', 'authUser'));
     }
 }

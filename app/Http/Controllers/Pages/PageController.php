@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Site;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -48,7 +51,7 @@ class PageController extends Controller
         }
     }
 
-    public function showSite()
+    public function showSite(Request $request)
     {
         if (Auth::check() && in_array(Auth::user()->role, ['admin', 'employee', 'user'])) {
             return view('pages.site');
